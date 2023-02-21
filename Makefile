@@ -8,7 +8,7 @@ EXECUTABLE = tron
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) -lSDL2 -lSDL2_image
+	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) -lSDL2
 
 build/%.o: src/%.cpp
 	$(CC) $(CFLAGS) $< -o $@
