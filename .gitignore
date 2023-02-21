@@ -1,3 +1,5 @@
 /tron
 *.o
 build/
+/err
+/out
