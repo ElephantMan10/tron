@@ -5,6 +5,8 @@ SOURCES = $(wildcard src/*.cpp)
 OBJECTS = $(SOURCES:src/%.cpp=build/%.o)
 EXECUTABLE = tron
 
+$(mkdir -p build)
+
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)

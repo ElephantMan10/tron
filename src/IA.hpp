@@ -9,9 +9,10 @@ class IA {
         int x;
         int y;
         int** plateau;
-        int* score;
+        int score;
+        void algo(int a);
     public:
-        IA(int x, int y, int** plateau, int* score);
+        IA(int x, int y, int** plateau, int score);
         int getX();
         int getY();
         int getScore();
@@ -20,6 +21,7 @@ class IA {
         void setY(int y);
         void setScore(int score);
         void setPlateau(int** plateau);
+        void play();
 };
 
 #endif
