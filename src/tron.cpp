@@ -12,15 +12,17 @@ int main(int argc, char *argv[])
     // plateau->afficher();
     // cout << "------------------------------" <<endl;
     // plateau->play();
-    // plateau->afficher();
-    int i = 0;
-    while(!plateau->isOver()) {
+    plateau->afficher();
+    int i = 1;
+    while(i<6){//!plateau->isOver()) {
         cout << "Tour " << i++ << endl;
         cout << plateau->getNbJoueursVivant() << " joueurs restants" << endl;
         plateau->play();
         plateau->afficher();
         cout << "------------------------------" <<endl;
     }
+    plateau->end();
+    delete plateau;
     
     return 0;
 }

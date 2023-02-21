@@ -58,7 +58,7 @@ void Plateau::joueurMort(Joueur *joueur) {
         if (this->joueurVivant[i] == joueur) {
             Joueur *j = this->joueurVivant[i];
             this->joueurVivant.erase(this->joueurVivant.begin() + i);
-            delete j;
+            j->remove();
             break;
         }
     }
@@ -82,6 +82,9 @@ void Plateau::afficher() {
 }
 
 void Plateau::play() {
+    if(this->isOver()) {
+        return;
+    }
     for (int i = 0; i < this->joueur.size(); i++) {
         this->plateau[this->joueur[i]->getX()][this->joueur[i]->getY()] = -1;
         this->joueur[i]->play();
@@ -104,4 +107,14 @@ int Plateau::getNbJoueursVivant() {
 
 void Plateau::setNbJoueursVivant(int nbJoueursVivant) {
     this->nbJoueursVivant = nbJoueursVivant;
+}
+
+void Plateau::end() {
+    for (int i = 0; i < this->taille; i++) {
+        delete[] this->plateau[i];
+    }
+    delete[] this->plateau;
+    for (int i = 0; i < this->joueur.size(); i++) {
+        delete this->joueur[i];
+    }
 }

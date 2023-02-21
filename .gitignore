@@ -3,3 +3,4 @@
 build/
 /err
 /out
+/vgcore.*

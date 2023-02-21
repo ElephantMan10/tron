@@ -29,6 +29,7 @@ class Joueur {
         void setPlateau(int** plateau);
         void setIA(IA *ia);
         void play();
+        void remove();
 };
 
 #endif

@@ -32,6 +32,7 @@ class Plateau {
         void afficher();
         void play();
         bool isOver();
+        void end();
 };
 
 #endif

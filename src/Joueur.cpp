@@ -55,3 +55,7 @@ void Joueur::play() {
     this->y = this->ia->getY();
     this->score = this->ia->getScore();
 }
+
+void Joueur::remove() {
+    delete this->ia;
+}
