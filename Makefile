@@ -1,3 +1,5 @@
+$(mkdir -p build)
+
 CC = g++
 CFLAGS = -c -Wall -std=c++11
 LDFLAGS =
@@ -10,7 +12,7 @@ $(mkdir -p build)
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) -lSDL2
+	$(CC) $(LDFLAGS) -o $@ $(OBJECTS)
 
 build/%.o: src/%.cpp
 	$(CC) $(CFLAGS) $< -o $@

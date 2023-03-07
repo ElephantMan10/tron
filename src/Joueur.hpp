@@ -11,7 +11,7 @@ class Joueur {
     private:
         int x;
         int y;
-        int score;
+        int heuristique;
         int** plateau;
         IA *ia;
         int id;
@@ -19,17 +19,21 @@ class Joueur {
         Joueur(int x, int y, int** plateau, int id, IA *ia);
         int getX();
         int getY();
-        int getScore();
+        int getHeuristique();
         int** getPlateau();
         IA* getIA();
         int getId();
         void setX(int x);
         void setY(int y);
-        void setScore(int score);
+        void setScore(int heuristique);
         void setPlateau(int** plateau);
         void setIA(IA *ia);
+        void setId(int id);
+        void setVivant(bool vivant);
         void play();
         void remove();
+        bool isVivant();
+        bool operator==(const Joueur &joueur);
 };
 
 #endif
