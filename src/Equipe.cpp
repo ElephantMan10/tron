@@ -8,7 +8,7 @@ Equipe::Equipe(int id, vector<Joueur*> joueurs, int** plateau, int idAlgo, int t
     this->plateau = plateau;
 }
 
-Equipe::Equipe(int id, int nbJoueurs, int** plateau, int idAlgo, int taille) {
+Equipe::Equipe(int id, int nbJoueurs, int** plateau, int idAlgo, int taille, int profondeur, vector<int> joueurs) {
     this->id = id;
     this->nbJoueurs = nbJoueurs;
     this->nbJoueursVivants = nbJoueurs;
@@ -20,8 +20,7 @@ Equipe::Equipe(int id, int nbJoueurs, int** plateau, int idAlgo, int taille) {
             x = rand()%taille;
             y = rand()%taille;
         }
-
-
+        this->joueurs.push_back(new Joueur(x, y, this->plateau, nbJoueurs*(id+1), new IA(x, y, this->plateau, idAlgo, nbJoueurs*(id+1), taille, profondeur, joueurs)));
     }
 }
 
@@ -79,6 +78,6 @@ void Equipe::joueurMort(Joueur* joueur) {
 void Equipe::play() {
     for (Joueur* joueur : this->joueurs) {
         if(joueur->isVivant())
-        joueur->play();
+            joueur->play();
     }
 }

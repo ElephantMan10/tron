@@ -1,8 +1,8 @@
 #ifndef STATE_HPP
 #define STATE_HPP
 #include <iostream>
-#include "Plateau.hpp"
 #include "Move.hpp"
+#include "Joueur.hpp"
 #include <string>
 #include <list>
 #include <vector>
@@ -33,9 +33,9 @@ class State {
     int getPlayer();
     int getTour();
     bool isTerminal();
-    Joueur* getJoueur();
+    int getJoueur();
     State* play();
-    vector<State*> getNewState(Joueur* j);
+    vector<State*> getNewState(int x, int y, int id);
     int getHeuristic();
 };
 

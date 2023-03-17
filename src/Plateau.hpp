@@ -21,10 +21,6 @@ class Plateau {
         int nbJoueursVivant;
         int* winner;
         vector<int> joueurs;
-        vector<Equipe*> equipes;
-        vector<Equipe*> equipesVivantes;
-        int nbEquipesVivantes;
-        vector<int> equipes;
     public:
         /**
         * constructeur du plateau

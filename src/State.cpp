@@ -58,8 +58,8 @@ State::State(int** board, int taille, vector<int> jvivant , Move* move, vector<S
     }
   }
 
-  vector<State*> State::getNewState(Joueur* j){
-    Move* m = new Move(j->getX(),j->getY(),j->getId());
+  vector<State*> State::getNewState(int x, int y, int id){
+    Move* m = new Move(x,y,id);
     int ** newBoard;
     vector<vector<int>> moves = m->getAllNextMove();
     vector<Move*> newMoves;
@@ -76,19 +76,19 @@ State::State(int** board, int taille, vector<int> jvivant , Move* move, vector<S
         }
       }
       if(newBoard[move[0]][move[1]] == 0){
-        newBoard[move[0]][move[1]] = j->getId();
+        newBoard[move[0]][move[1]] = id;
         newBoard[m->getX()][m->getY()] = -1;
       }
       if(newBoard[move[0]][move[1]] == -1){
         continue;
       }
-      Move* newMove = new Move(move[0],move[1],j->getId());
+      Move* newMove = new Move(move[0],move[1],id);
       newMoves.push_back(newMove);
     }
     vector<int> newJvivant = this->jvivant;
     vector<int> toRemove;
     if(newMoves.empty()){
-      toRemove.push_back(j->getId());
+      toRemove.push_back(id);
     }
     
     for(int id : toRemove){
@@ -101,7 +101,7 @@ State::State(int** board, int taille, vector<int> jvivant , Move* move, vector<S
 
     for(Move* m : newMoves){
       vector<State*> newChildren;
-      State* newState = new State(newBoard,this->taille,newJvivant,m,newChildren,this,this->rootPlayer,j->getId(),this->tour+1);
+      State* newState = new State(newBoard,this->taille,newJvivant,m,newChildren,this,this->rootPlayer,id,this->tour+1);
       this->children.push_back(newState);
     }
     return this->children;

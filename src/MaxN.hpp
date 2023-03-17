@@ -1,6 +1,7 @@
 #ifndef MAXN_HPP
 #define MAXN_HPP
 #include "State.hpp"
+#include "Move.hpp"
 #include <iostream>
 #include <string>
 #include <list>
@@ -18,7 +19,9 @@ class MaxN {
     int getJoueurActuel();
     vector<int> getJoueur();
     int getProfondeur();
-    vector<int> algo(State* s, int p, Joueur* j,vector<Joueur*> allJ);
-    vector<int> algoAB(State* s, int p, Joueur* j,vector<Joueur*> allJ, int alpha, int beta);
+    vector<int> algo(State* s, int p, int x, int y, int id,vector<int> allJ);
+    vector<int> algoAB(State* s, int p, int x, int y, int id,vector<int> allJ, int alpha, int beta);
+    Move* getBestMove(State* s, int p, int x, int y, int id,vector<int> allJ);
+    Move* getBestMoveAB(State* s, int p, int x, int y, int id,vector<int> allJ, int alpha, int beta);
 };
 #endif

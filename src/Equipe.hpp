@@ -13,9 +13,10 @@ class Equipe {
         int nbJoueurs;
         int nbJoueursVivants;
         int idAlgo;
+        int profondeur;
     public:
         Equipe(int id, vector<Joueur*> joueurs, int** plateau, int idAlgo, int taille);
-        Equipe(int id, int nbJoueurs, int** plateau, int idAlgo, int taille);
+        Equipe(int id, int nbJoueurs, int** plateau, int idAlgo, int taille, int profondeur, vector<int> joueurs);
         int getId();
         vector<Joueur*> getJoueurs();
         int getNbJoueurs();

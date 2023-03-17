@@ -1,6 +1,6 @@
 #include "IA.hpp"
 
-IA::IA(int x, int y, int** plateau, int nAlgo, int idJoueur, int taille, int profondeur, vector<int> joueurs) {
+IA::IA(int x, int y, int** plateau, int nAlgo, int idJoueur, int taille, int profondeur, vector<int> joueurs, int tour) {
     this->x = x;
     this->y = y;
     this->plateau = plateau;
@@ -11,6 +11,7 @@ IA::IA(int x, int y, int** plateau, int nAlgo, int idJoueur, int taille, int pro
     this->nAlgo = nAlgo;
     this->profondeur = profondeur;
     this->joueurs = joueurs;
+    this->tour = tour;
     srand(time(NULL)); // graine random
 }
 
@@ -67,6 +68,15 @@ void IA::algo(int a) {
         case 0:
             this->algoRandom();
             break;
+        case 1:
+            this->algoMaxN();
+            break;
+        case 2:
+            this->algoMaxNAB();
+            break;
+        case 3:
+            this->algoParanoid();
+            break;
         default:
             this->vivant = false;
             cout << "Algo non trouvé pour Joueur " << this->idJoueur << " => mort" << endl;
@@ -102,4 +112,40 @@ void IA::algoRandom() {
         this->x += direction[a][0];
         this->y += direction[a][1];
     }
+}
+
+void IA::algoMaxN() {
+    // TODO
+    State* p = NULL;
+    Move* start = new Move(this->x,this->y,this->idJoueur);
+    vector<State*> child;
+    State* s = new State(this->plateau,this->taille,this->joueurs,start,child,p,this->idJoueur,this->idJoueur,this->tour);
+    MaxN alg = MaxN(this->idJoueur,this->profondeur,this->joueurs);
+    Move* m = alg.getBestMove(s,this->profondeur,this->x,this->y,this->idJoueur,this->joueurs);
+    this->x = m->getX();
+    this->y = m->getY();
+}
+
+void IA::algoMaxNAB() {
+    // TODO
+    State* p = NULL;
+    Move* start = new Move(this->x,this->y,this->idJoueur);
+    vector<State*> child;
+    State* s = new State(this->plateau,this->taille,this->joueurs,start,child,p,this->idJoueur,this->idJoueur,this->tour);
+    MaxN alg = MaxN(this->idJoueur,this->profondeur,this->joueurs);
+    Move* m = alg.getBestMove(s,this->profondeur,this->x,this->y,this->idJoueur,this->joueurs);
+    this->x = m->getX();
+    this->y = m->getY();
+}
+
+void IA::algoParanoid() {
+    // TODO
+    State* p = NULL;
+    Move* start = new Move(this->x,this->y,this->idJoueur);
+    vector<State*> child;
+    State* s = new State(this->plateau,this->taille,this->joueurs,start,child,p,this->idJoueur,this->idJoueur,this->tour);
+    Paranoid alg = Paranoid(this->idJoueur,this->profondeur);
+    Move* m = alg.getBestMove(s,this->profondeur,this->x,this->y,this->idJoueur);
+    this->x = m->getX();
+    this->y = m->getY();
 }

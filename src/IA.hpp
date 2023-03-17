@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <vector>
+#include "MaxN.hpp"
+#include "Paranoid.hpp"
 
 using namespace std;
 
@@ -17,15 +19,20 @@ class IA {
         int score;
         int nAlgo;
         bool vivant;
+        int tour;
         void algo(int a);
         void algoRandom();
-        int algoParanoid(int profondeur);
+        void algoMaxN();
+        void algoMaxNAB();
+        void algoParanoid();
         int idJoueur;
         int taille;
         int profondeur;
         vector<int> joueurs;
+        
+
     public:
-        IA(int x, int y, int** plateau, int nAlgo, int idJoueur, int taille, int profondeur, vector<int> joueurs);
+        IA(int x, int y, int** plateau, int nAlgo, int idJoueur, int taille, int profondeur, vector<int> joueurs,int tour);
         int getX();
         int getY();
         int getScore();

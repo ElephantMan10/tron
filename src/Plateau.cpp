@@ -23,7 +23,7 @@ Plateau::Plateau(int taille, int nbJoueurs) {
             x = rand()%taille;
             y = rand()%taille;
         }
-        this->joueur.push_back(new Joueur(x, y, this->plateau, i, new IA(x, y, this->plateau, 0, i, this->taille, 0, this->joueurs)));
+        this->joueur.push_back(new Joueur(x, y, this->plateau, i, new IA(x, y, this->plateau, 0, i, this->taille, 0, this->joueurs,0)));
         cout << "Algo joueur " << i << " : " << this->joueur[i-1]->getIA()->getAlgo() << endl;
         this->plateau[x][y] = i;
     }
@@ -52,14 +52,10 @@ Plateau::Plateau(int taille, int nbJoueurs, int* algos) {
             y = rand()%taille;
         }
         cout << "Algo joueur " << i/2+1 << " : " << algos[i] << ", profondeur : " << algos[i+1] << endl;
-        this->joueur.push_back(new Joueur(x, y, this->plateau, i/2+1, new IA(x, y, this->plateau, algos[i], i/2+1, this->taille, algos[i+1], this->joueurs)));
+        this->joueur.push_back(new Joueur(x, y, this->plateau, i/2+1, new IA(x, y, this->plateau, algos[i], i/2+1, this->taille, algos[i+1], this->joueurs,0)));
         this->plateau[x][y] = i/2+1;
     }
     this->joueurVivant = this->joueur;
-}
-
-Plateau::Plateau(int taille, int nbEquipe, int* nbJoueurs, int* algos) {
-    
 }
 
 int Plateau::getTaille() {
