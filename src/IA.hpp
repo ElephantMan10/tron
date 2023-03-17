@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <vector>
-#include <set>
 
 using namespace std;
 
@@ -15,6 +14,7 @@ class IA {
         int x;
         int y;
         int** plateau;
+        int score;
         int nAlgo;
         bool vivant;
         void algo(int a);
@@ -28,7 +28,7 @@ class IA {
         IA(int x, int y, int** plateau, int nAlgo, int idJoueur, int taille, int profondeur, vector<int> joueurs);
         int getX();
         int getY();
-        int getHeuristique();
+        int getScore();
         int** getPlateau();
         int getIdJoueur();
         int getTaille();
@@ -38,6 +38,7 @@ class IA {
         void setY(int y);
         void setAlgo(int nAlgo);
         void setPlateau(int** plateau);
+        void setScore(int score);
         void setVivant(bool vivant);
         void play();
 };

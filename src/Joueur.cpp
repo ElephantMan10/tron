@@ -5,7 +5,7 @@ Joueur::Joueur(int x, int y, int** plateau, int id, IA *ia) {
     this->y = y;
     this->plateau = plateau;
     this->ia = ia;
-    this->heuristique = 0;
+    this->score = 0;
     this->id = id;
 }
 
@@ -17,8 +17,8 @@ int Joueur::getY() {
     return this->y;
 }
 
-int Joueur::getHeuristique() {
-    return this->heuristique;
+int Joueur::getScore() {
+    return this->score;
 }
 
 int** Joueur::getPlateau() {
@@ -41,8 +41,8 @@ void Joueur::setY(int y) {
     this->y = y;
 }
 
-void Joueur::setScore(int heuristique) {
-    this->heuristique = heuristique;
+void Joueur::setScore(int score) {
+    this->score = score;
 }
 
 void Joueur::setPlateau(int** plateau) {
@@ -65,7 +65,7 @@ void Joueur::play() {
     this->ia->play();
     this->x = this->ia->getX();
     this->y = this->ia->getY();
-    this->heuristique = this->ia->getHeuristique();
+    this->score = this->ia->getScore();
 }
 
 void Joueur::remove() {

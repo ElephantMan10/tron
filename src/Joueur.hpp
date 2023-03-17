@@ -11,7 +11,7 @@ class Joueur {
     private:
         int x;
         int y;
-        int heuristique;
+        int score;
         int** plateau;
         IA *ia;
         int id;
@@ -19,13 +19,13 @@ class Joueur {
         Joueur(int x, int y, int** plateau, int id, IA *ia);
         int getX();
         int getY();
-        int getHeuristique();
+        int getScore();
         int** getPlateau();
         IA* getIA();
         int getId();
         void setX(int x);
         void setY(int y);
-        void setScore(int heuristique);
+        void setScore(int score);
         void setPlateau(int** plateau);
         void setIA(IA *ia);
         void setId(int id);

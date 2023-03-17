@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Equipe.hpp"
 #include "Joueur.hpp"
 
 using namespace std;
@@ -20,6 +21,10 @@ class Plateau {
         int nbJoueursVivant;
         int* winner;
         vector<int> joueurs;
+        vector<Equipe*> equipes;
+        vector<Equipe*> equipesVivantes;
+        int nbEquipesVivantes;
+        vector<int> equipes;
     public:
         /**
         * constructeur du plateau
@@ -38,6 +43,7 @@ class Plateau {
         * @ensures taille>0, nbJoueur>0
         */
         Plateau(int taille, int nbJoueur, int* algos);
+        Plateau(int taille, int nbJoueur, int* nbJoueurs, int* algos);
         ~Plateau();
         int getTaille();
         int** getPlateau();

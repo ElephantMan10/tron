@@ -58,6 +58,10 @@ Plateau::Plateau(int taille, int nbJoueurs, int* algos) {
     this->joueurVivant = this->joueur;
 }
 
+Plateau::Plateau(int taille, int nbEquipe, int* nbJoueurs, int* algos) {
+    
+}
+
 int Plateau::getTaille() {
     return this->taille;
 }

@@ -4,6 +4,7 @@ IA::IA(int x, int y, int** plateau, int nAlgo, int idJoueur, int taille, int pro
     this->x = x;
     this->y = y;
     this->plateau = plateau;
+    this->score = 0;
     this->idJoueur = idJoueur;
     this->taille = taille;
     this->vivant = true;
@@ -21,10 +22,8 @@ int IA::getY() {
     return this->y;
 }
 
-int IA::getHeuristique() {
-    int heuristique = 0;
-    
-    return heuristique;
+int IA::getScore() {
+    return this->score;
 }
 
 int** IA::getPlateau() {
@@ -41,6 +40,10 @@ void IA::setX(int x) {
 
 void IA::setY(int y) {
     this->y = y;
+}
+
+void IA::setScore(int score) {
+    this->score = score;
 }
 
 void IA::setPlateau(int** plateau) {
@@ -63,9 +66,6 @@ void IA::algo(int a) {
     switch(a) {
         case 0:
             this->algoRandom();
-            break;
-        case 1:
-            this->algoParanoid(this->profondeur);
             break;
         default:
             this->vivant = false;
@@ -102,12 +102,4 @@ void IA::algoRandom() {
         this->x += direction[a][0];
         this->y += direction[a][1];
     }
-}
-
-int IA::algoParanoid(int profondeur) {
-    if(profondeur == 0) {
-        return this->getHeuristique();
-    }
-
-    return 0;
 }
