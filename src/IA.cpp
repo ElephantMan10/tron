@@ -122,8 +122,12 @@ void IA::algoMaxN() {
     State* s = new State(this->plateau,this->taille,this->joueurs,start,child,p,this->idJoueur,this->idJoueur,this->tour);
     MaxN alg = MaxN(this->idJoueur,this->profondeur,this->joueurs);
     Move* m = alg.getBestMove(s,this->profondeur,this->x,this->y,this->idJoueur,this->joueurs);
-    this->x = m->getX();
-    this->y = m->getY();
+    if(m == NULL) {
+        this->vivant = false;
+    } else {
+        this->x = m->getX();
+        this->y = m->getY();
+    }
 }
 
 void IA::algoMaxNAB() {
@@ -134,8 +138,12 @@ void IA::algoMaxNAB() {
     State* s = new State(this->plateau,this->taille,this->joueurs,start,child,p,this->idJoueur,this->idJoueur,this->tour);
     MaxN alg = MaxN(this->idJoueur,this->profondeur,this->joueurs);
     Move* m = alg.getBestMove(s,this->profondeur,this->x,this->y,this->idJoueur,this->joueurs);
-    this->x = m->getX();
-    this->y = m->getY();
+    if(m == NULL) {
+        this->vivant = false;
+    } else {
+        this->x = m->getX();
+        this->y = m->getY();
+    }
 }
 
 void IA::algoParanoid() {
@@ -146,6 +154,10 @@ void IA::algoParanoid() {
     State* s = new State(this->plateau,this->taille,this->joueurs,start,child,p,this->idJoueur,this->idJoueur,this->tour);
     Paranoid alg = Paranoid(this->idJoueur,this->profondeur);
     Move* m = alg.getBestMove(s,this->profondeur,this->x,this->y,this->idJoueur);
-    this->x = m->getX();
-    this->y = m->getY();
+    if(m == NULL) {
+        this->vivant = false;
+    } else {
+        this->x = m->getX();
+        this->y = m->getY();
+    }
 }

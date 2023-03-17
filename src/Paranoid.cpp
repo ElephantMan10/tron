@@ -50,7 +50,8 @@ int Paranoid::algo(State* s, int p, int x, int y, int id) {
 Move* Paranoid::getBestMove(State* s, int p, int x, int y, int id){
     int bestval = INT8_MIN;
     Move* bestmove = NULL;
-    for(State* fils :  s->getNewState(x,y,id)){
+    vector<State*> newStates = s->getNewState(x,y,id);
+    for(State* fils : newStates){
         int val = this->algo(fils,p-1, x, y, id);
         if(val > bestval || bestmove == NULL){
             bestval = val;

@@ -58,6 +58,27 @@ Plateau::Plateau(int taille, int nbJoueurs, int* algos) {
     this->joueurVivant = this->joueur;
 }
 
+Plateau::Plateau(int taille, int nbEquipes, int*nbJoueurs, int* algos){
+    this->taille = taille;
+    this->nbJoueursVivant = 0;
+    for(int i = 0; i < nbEquipes; i++){
+        this->nbJoueursVivant += nbJoueurs[i];
+    }
+    this->plateau = new int*[taille];
+    for (int i = 0; i < taille; i++) {
+        this->plateau[i] = new int[taille];
+        for (int j = 0; j < taille; j++) {
+            this->plateau[i][j] = 0;
+        }
+    }
+    this->joueurs = vector<int>();
+    for (int i = 0; i < nbEquipes; i++) {
+        for(int j = 0; j < nbJoueurs[i]; j++){
+            this->joueurs.push_back((i+1)*(j+1));
+        }
+    }
+}
+
 int Plateau::getTaille() {
     return this->taille;
 }
@@ -134,6 +155,7 @@ void Plateau::play() {
         } else {
             this->plateau[j->getX()][j->getY()] = j->getId();
         }
+        this->setPlateauJoueurs();
     }
     for (Joueur* j : joueurMort) {
         this->joueurMort(j);
@@ -166,6 +188,12 @@ void Plateau::setNbJoueursVivant(int nbJoueursVivant) {
 
 int* Plateau::getWinner() {
     return this->winner;
+}
+
+void Plateau::setPlateauJoueurs() {
+    for (Joueur* j : this->joueur) {
+        j->setPlateau(this->plateau);
+    }
 }
 
 Plateau::~Plateau() { 

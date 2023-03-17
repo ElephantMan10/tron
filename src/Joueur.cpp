@@ -1,6 +1,6 @@
 #include "Joueur.hpp"
 
-Joueur::Joueur(int x, int y, int** plateau, int id, IA *ia) {
+Joueur::Joueur(int x, int y, int** plateau, int id, IA* ia) {
     this->x = x;
     this->y = y;
     this->plateau = plateau;
@@ -47,6 +47,7 @@ void Joueur::setScore(int score) {
 
 void Joueur::setPlateau(int** plateau) {
     this->plateau = plateau;
+    this->ia->setPlateau(plateau);
 }
 
 void Joueur::setIA(IA *ia) {

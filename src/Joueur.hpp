@@ -13,10 +13,10 @@ class Joueur {
         int y;
         int score;
         int** plateau;
-        IA *ia;
+        IA* ia;
         int id;
     public:
-        Joueur(int x, int y, int** plateau, int id, IA *ia);
+        Joueur(int x, int y, int** plateau, int id, IA* ia);
         int getX();
         int getY();
         int getScore();
@@ -27,7 +27,7 @@ class Joueur {
         void setY(int y);
         void setScore(int score);
         void setPlateau(int** plateau);
-        void setIA(IA *ia);
+        void setIA(IA* ia);
         void setId(int id);
         void setVivant(bool vivant);
         void play();

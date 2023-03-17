@@ -21,25 +21,14 @@ class Plateau {
         int nbJoueursVivant;
         int* winner;
         vector<int> joueurs;
+        vector<Equipe*> equipes;
+        vector<Equipe*> equipesVivantes;
+        int nbEquipesVivantes;
+        vector<int> equipes;
     public:
-        /**
-        * constructeur du plateau
-        * @param taille est un int, 
-        * @param nbJoueur est un int
-        * @requires taille est de type int, nbJoueur est de type int
-        * @ensures taille>0, nbJoueur>0
-        */
         Plateau(int taille, int nbJoueur);
-        /**
-        * constructeur du plateau
-        * @param taille est un int
-        * @param nbJoueur est un int
-        * @param algos est un int
-        * @requires taille est de type int, nbJoueur est de type int
-        * @ensures taille>0, nbJoueur>0
-        */
         Plateau(int taille, int nbJoueur, int* algos);
-        Plateau(int taille, int nbJoueur, int* nbJoueurs, int* algos);
+        Plateau(int taille, int nbEquipes, int* nbJoueurs, int* algos);
         ~Plateau();
         int getTaille();
         int** getPlateau();
@@ -53,6 +42,7 @@ class Plateau {
         void setJoueur(vector<Joueur*> joueur);
         void setJoueurVivant(vector<Joueur*> joueurVivant);
         void setNbJoueursVivant(int nbJoueursVivant);
+        void setPlateauJoueurs();
         void ajouterJoueur(Joueur *joueur);
         void joueurMort(Joueur *joueur);
         void afficher();

@@ -20,7 +20,7 @@ Equipe::Equipe(int id, int nbJoueurs, int** plateau, int idAlgo, int taille, int
             x = rand()%taille;
             y = rand()%taille;
         }
-        this->joueurs.push_back(new Joueur(x, y, this->plateau, nbJoueurs*(id+1), new IA(x, y, this->plateau, idAlgo, nbJoueurs*(id+1), taille, profondeur, joueurs)));
+        this->joueurs.push_back(new Joueur(x, y, this->plateau, nbJoueurs*(id+1), new IA(x, y, this->plateau, idAlgo, nbJoueurs*(id+1), taille, profondeur, joueurs, 0)));
     }
 }
 
