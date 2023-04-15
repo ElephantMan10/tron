@@ -30,11 +30,13 @@ vector<vector<int>> Move::getAllNextMove() {
         v.push_back(this->y+move[1]);
         allNextMove.push_back(v);
     }
+    // Pour melanger la liste des mouvements pour eviter les 
+    random_shuffle(allNextMove.begin(), allNextMove.end());
 
     return allNextMove;
 }
 
 void Move::afficher() {
-    cout << "x : " << this->x << " y : " << this->y << " id : " << this->id << endl;
+    //cout << "x : " << this->x << " y : " << this->y << " id : " << this->id << endl;
 }
 

@@ -6,6 +6,7 @@
 #include <vector>
 #include "Equipe.hpp"
 #include "Joueur.hpp"
+#include <unistd.h>
 
 using namespace std;
 /**
@@ -16,19 +17,19 @@ class Plateau {
     private:
         int taille;
         int** plateau;
-        vector<Joueur*> joueur;
+        vector<Joueur*> joueurs;
         vector<Joueur*> joueurVivant;
         int nbJoueursVivant;
         int* winner;
-        vector<int> joueurs;
+        vector<int> joueursInt;
         vector<Equipe*> equipes;
         vector<Equipe*> equipesVivantes;
         int nbEquipesVivantes;
-        vector<int> equipes;
+        vector<int> equipesInt;
     public:
         Plateau(int taille, int nbJoueur);
         Plateau(int taille, int nbJoueur, int* algos);
-        Plateau(int taille, int nbEquipes, int* nbJoueurs, int* algos);
+        Plateau(int taille, int nbEquipes, int* nbJoueurs, int* algos, int* profondeur);
         ~Plateau();
         int getTaille();
         int** getPlateau();
@@ -43,10 +44,13 @@ class Plateau {
         void setJoueurVivant(vector<Joueur*> joueurVivant);
         void setNbJoueursVivant(int nbJoueursVivant);
         void setPlateauJoueurs();
+        void setPlateauEquipes();
         void ajouterJoueur(Joueur *joueur);
         void joueurMort(Joueur *joueur);
+        void equipeMorte(Equipe *equipe);
         void afficher();
         void play();
+        void playEquipe();
         bool isOver();
         void end();
 };

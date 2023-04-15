@@ -1,9 +1,7 @@
 #include "Plateau.hpp"
-/**
- * La classe qui définie le plateau de jeu et les fonctions permettant d'interagir avec.
- * @author Mathis Roptin, Alexander Camatchy, Victoire Dane Moukoko Ndongo, Felix Senechal, Université de Caen Normandie
- */
+
 Plateau::Plateau(int taille, int nbJoueurs) {
+    srand(getpid());
     this->taille = taille;
     this->nbJoueursVivant = nbJoueurs;
     this->plateau = new int*[taille];
@@ -13,9 +11,9 @@ Plateau::Plateau(int taille, int nbJoueurs) {
             this->plateau[i][j] = 0;
         }
     }
-    this->joueurs = vector<int>();
+    this->joueursInt = vector<int>();
     for (int i = 0; i < nbJoueurs; i++) {
-        this->joueurs.push_back(i+1);
+        this->joueursInt.push_back(i+1);
     }
     for (int i = 1; i <= nbJoueurs; i++) {
         int x = rand()%taille, y = rand()%taille;
@@ -23,14 +21,15 @@ Plateau::Plateau(int taille, int nbJoueurs) {
             x = rand()%taille;
             y = rand()%taille;
         }
-        this->joueur.push_back(new Joueur(x, y, this->plateau, i, new IA(x, y, this->plateau, 0, i, this->taille, 0, this->joueurs,0)));
-        cout << "Algo joueur " << i << " : " << this->joueur[i-1]->getIA()->getAlgo() << endl;
+        this->joueurs.push_back(new Joueur(x, y, this->plateau, i, new IA(x, y, this->plateau, 0, i, this->taille, 0, this->joueursInt,0)));
+        cout << "Algo joueur " << i << " : " << this->joueurs[i-1]->getIA()->getAlgo() << endl;
         this->plateau[x][y] = i;
     }
-    this->joueurVivant = this->joueur;
+    this->joueurVivant = this->joueurs;
 }
 
 Plateau::Plateau(int taille, int nbJoueurs, int* algos) {
+    srand(getpid());
     this->taille = taille;
     this->nbJoueursVivant = nbJoueurs;
     this->plateau = new int*[taille];
@@ -41,29 +40,31 @@ Plateau::Plateau(int taille, int nbJoueurs, int* algos) {
         }
     }
     cout << "nbJoueurs : " << nbJoueurs << endl;
-    this->joueurs = vector<int>();
+    this->joueursInt = vector<int>();
     for (int i = 0; i < nbJoueurs; i++) {
-        this->joueurs.push_back(i+1);
+        this->joueursInt.push_back(i+1);
     }
     for (int i = 0; i < nbJoueurs*2; i+=2) {
+        // int x = (rand()%(taille/nbJoueurs))+i*(taille/nbJoueurs), y = (rand()%(taille/nbJoueurs))+i*(taille/nbJoueurs);
         int x = rand()%taille, y = rand()%taille;
         while(this->plateau[x][y] != 0) {
+            // x = (rand()%(taille/nbJoueurs))+i*(taille/nbJoueurs);
+            // y = (rand()%(taille/nbJoueurs))+i*(taille/nbJoueurs);
             x = rand()%taille;
             y = rand()%taille;
         }
         cout << "Algo joueur " << i/2+1 << " : " << algos[i] << ", profondeur : " << algos[i+1] << endl;
-        this->joueur.push_back(new Joueur(x, y, this->plateau, i/2+1, new IA(x, y, this->plateau, algos[i], i/2+1, this->taille, algos[i+1], this->joueurs,0)));
+        this->joueurs.push_back(new Joueur(x, y, this->plateau, i/2+1, new IA(x, y, this->plateau, algos[i], i/2+1, this->taille, algos[i+1], this->joueursInt,0)));
         this->plateau[x][y] = i/2+1;
     }
-    this->joueurVivant = this->joueur;
+    this->joueurVivant = this->joueurs;
 }
 
-Plateau::Plateau(int taille, int nbEquipes, int*nbJoueurs, int* algos){
+Plateau::Plateau(int taille, int nbEquipes, int* nbJoueurs, int* algos, int* profondeur) {
+    srand(getpid());
     this->taille = taille;
+    this->nbEquipesVivantes = nbEquipes;
     this->nbJoueursVivant = 0;
-    for(int i = 0; i < nbEquipes; i++){
-        this->nbJoueursVivant += nbJoueurs[i];
-    }
     this->plateau = new int*[taille];
     for (int i = 0; i < taille; i++) {
         this->plateau[i] = new int[taille];
@@ -71,12 +72,41 @@ Plateau::Plateau(int taille, int nbEquipes, int*nbJoueurs, int* algos){
             this->plateau[i][j] = 0;
         }
     }
-    this->joueurs = vector<int>();
+    // cout << "création des equipes : nb = " << nbEquipes << endl;
+    this->equipesInt = vector<int>();
     for (int i = 0; i < nbEquipes; i++) {
-        for(int j = 0; j < nbJoueurs[i]; j++){
-            this->joueurs.push_back((i+1)*(j+1));
+        this->equipesInt.push_back(i+1);
+    }
+    // cout << "création des joueurs" << endl;
+    this->joueursInt = vector<int>();
+    for (int i = 0; i < nbEquipes; i++) {
+        for (int j = 0; j < nbJoueurs[i]; j++) {
+            this->joueursInt.push_back(i+1);
+            nbJoueursVivant++;
         }
     }
+    // cout << "nbJoueursVivant : " << nbJoueursVivant << endl;
+    this->equipes = vector<Equipe*>();
+    this->equipes.push_back(new Equipe(1, nbJoueurs[0], this->plateau, algos[0], this->taille, profondeur[0], 1));
+    for(int i = 1; i < nbEquipes; i++) {
+        this->equipes.push_back(new Equipe(i+1, nbJoueurs[i], this->plateau, algos[i], this->taille, profondeur[i], nbJoueurs[i]+1));
+    }
+    // cout << "placement des joueurs" << endl;
+    for(int i = 0; i < nbEquipes; i++) {
+        // cout << "equipe " << i << " : " << nbJoueurs[i] << endl;
+        for (int j = 0; j < nbJoueurs[i]; j++) {
+            int x = this->equipes[i]->getJoueurs()[j]->getX(), y = this->equipes[i]->getJoueurs()[j]->getY();
+            // cout << "Algo joueur " << j << " : " << this->equipes[i]->getJoueurs()[j]->getIA()->getAlgo() << endl;
+            this->joueurs.push_back(this->equipes[i]->getJoueurs()[j]);
+            this->plateau[x][y] = this->equipes[i]->getJoueurs()[j]->getId();
+        }
+        // cout << "fin equipe " << i << endl;
+    }
+    for(int i = 0; i < nbEquipes; i++) {
+        this->equipes[i]->setPlateau(this->plateau);
+    }
+    this->joueurVivant = this->joueurs;
+    this->equipesVivantes = this->equipes;
 }
 
 int Plateau::getTaille() {
@@ -88,7 +118,7 @@ int** Plateau::getPlateau() {
 }
 
 vector<Joueur*> Plateau::getJoueur() {
-    return this->joueur;
+    return this->joueurs;
 }
 
 vector<Joueur*> Plateau::getJoueurVivant() {
@@ -104,7 +134,7 @@ void Plateau::setPlateau(int** plateau) {
 }
 
 void Plateau::setJoueur(vector<Joueur*> joueur) {
-    this->joueur = joueur;
+    this->joueurs = joueur;
 }
 
 void Plateau::setJoueurVivant(vector<Joueur*> joueurVivant) {
@@ -112,14 +142,25 @@ void Plateau::setJoueurVivant(vector<Joueur*> joueurVivant) {
 }
 
 void Plateau::ajouterJoueur(Joueur *joueur) {
-    this->joueur.push_back(joueur);
+    this->joueurs.push_back(joueur);
 }
 
 void Plateau::joueurMort(Joueur *joueur) {
-    for (int i = 0; i < this->joueurVivant.size(); i++) {
+    for (size_t i = 0; i < this->joueurVivant.size(); i++) {
         if (this->joueurVivant[i] == joueur) {
             this->joueurVivant.erase(this->joueurVivant.begin() + i);
             this->nbJoueursVivant--;
+            break;
+        }
+    }
+}
+
+void Plateau::equipeMorte(Equipe *equipe) {
+    for (size_t i = 0; i < this->equipesVivantes.size(); i++) {
+        if (this->equipesVivantes[i] == equipe) {
+            equipe->setVivant(false);
+            this->equipesVivantes.erase(this->equipesVivantes.begin() + i);
+            this->nbEquipesVivantes--;
             break;
         }
     }
@@ -143,9 +184,6 @@ void Plateau::afficher() {
 }
 
 void Plateau::play() {
-    // if(this->isOver()) {
-    //     return;
-    // }
     vector<Joueur*> joueurMort;
     for (Joueur* j : this->joueurVivant) {
         this->plateau[j->getX()][j->getY()] = -1;
@@ -160,23 +198,57 @@ void Plateau::play() {
     for (Joueur* j : joueurMort) {
         this->joueurMort(j);
     }
-    for(Joueur* j : this->joueur) {
+    for(Joueur* j : this->joueurs) {
         cout << "Joueur " << j->getId() << " : " << (j->isVivant()?"vivant":"mort") << endl;
+    }
+}
+
+void Plateau::playEquipe() {
+    vector<Equipe*> equipeMort;
+    for (Equipe* e : this->equipesVivantes) {
+        e->play();
+        if (!e->isVivant()) {
+            equipeMort.push_back(e);
+        } else {
+            this->plateau = e->getPlateau();
+        }
+        this->setPlateauEquipes();
+    }
+    for (Equipe* e : equipeMort) {
+        this->equipeMorte(e);
+        cout << "Equipe " << e->getId() << " est morte" << endl;
+    }
+    for(Equipe* e : this->equipes) {
+        cout << "Equipe " << e->getId() << " : " << (e->isVivant()?"vivant":"mort") << endl;
     }
 }
 
 bool Plateau::isOver() {
     if(this->nbJoueursVivant <= 1) {
-        cout << "Fin de la partie" << endl;
+        //cout << "Fin de la partie" << endl;
         this->winner = new int[this->joueurVivant.size()];
-        for (int i = 0; i < this->joueurVivant.size(); i++) {
+        for (size_t i = 0; i < this->joueurVivant.size(); i++) {
             this->winner[i] = this->joueurVivant[i]->getId();
-            cout << "Joueur " << this->joueurVivant[i]->getId() << " a gagné" << endl;
+            //cout << "Joueur " << this->joueurVivant[i]->getId() << " a gagné" << endl;
         }
         return true;
     }
     return false;
 }
+
+
+// bool Plateau::isOver() {
+//     if(this->nbEquipesVivantes <= 1) {
+//         cout << "Fin de la partie" << endl;
+//         this->winner = new int[this->equipesVivantes.size()];
+//         for (size_t i = 0; i < this->equipesVivantes.size(); i++) {
+//             this->winner[i] = this->equipesVivantes[i]->getId();
+//             cout << "Équipe " << this->equipesVivantes[i]->getId() << " a gagné" << endl;
+//         }
+//         return true;
+//     }
+//     return false;
+// }
 
 int Plateau::getNbJoueursVivant() {
     return this->nbJoueursVivant;
@@ -191,8 +263,14 @@ int* Plateau::getWinner() {
 }
 
 void Plateau::setPlateauJoueurs() {
-    for (Joueur* j : this->joueur) {
+    for (Joueur* j : this->joueurs) {
         j->setPlateau(this->plateau);
+    }
+}
+
+void Plateau::setPlateauEquipes() {
+    for (Equipe* e : this->equipes) {
+        e->setPlateau(this->plateau);
     }
 }
 
@@ -201,9 +279,9 @@ Plateau::~Plateau() {
         delete[] this->plateau[i];
     }
     delete[] this->plateau;
-    for (Joueur* j : this->joueur) {
+    for (Joueur* j : this->joueurs) {
         delete j;
     }
-    this->joueur.clear();
+    this->joueurs.clear();
     this->joueurVivant.clear();
 }

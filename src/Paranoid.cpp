@@ -22,7 +22,10 @@ int Paranoid::algo(State* s, int p, int x, int y, int id) {
     // TODO le code d'un algo minmax de base
     if(p == 0 || s->isTerminal()){
         s->getNewState(x,y,id);
-        return s->getHeuristic();
+        int h = s->getHeuristic();
+        // cout << "newstate " << s->getNewState(x,y,id).size() << endl;
+        // cout << "id: "<< id <<" heuristique = " << h << endl;
+        return h;
     } else {
         int b;
         this->compteur++;
@@ -53,9 +56,11 @@ Move* Paranoid::getBestMove(State* s, int p, int x, int y, int id){
     vector<State*> newStates = s->getNewState(x,y,id);
     for(State* fils : newStates){
         int val = this->algo(fils,p-1, x, y, id);
-        if(val > bestval || bestmove == NULL){
-            bestval = val;
-            bestmove = fils->getMove();
+        if(id == fils->getMove()->getId()){
+            if(val > bestval || bestmove == NULL || bestval == INT8_MIN ){
+                bestval = val;
+                bestmove = fils->getMove();
+            }
         }
     }
     return bestmove;

@@ -4,22 +4,23 @@
 #include <string>
 #include <list>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 class Move {
-    private :
-        int x;
-        int y;
-        int id;
+  private :
+    int x;
+    int y;
+    int id;
 
-    public:
-        Move(int x, int y, int id);
-        int getX();
-        int getY();
-        int getId();
-        vector<vector<int>> getAllNextMove();
-        void afficher();
+  public:
+    Move(int x, int y, int id);
+    int getX();
+    int getY();
+    int getId();
+    vector<vector<int>> getAllNextMove();
+    void afficher();
 };
 
 

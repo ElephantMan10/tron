@@ -1,0 +1,15 @@
+set grid; 
+set xrange[-1:10]; 
+set yrange[0:20]; 
+set key title 'Joueur' box; 
+set origin 0,0; 
+set terminal png; 
+set boxwidth 0.6 relative; 
+set style data histograms; 
+set style histogram cluster gap 2; 
+set style fill solid 1 border lt -1; 
+set title 'nombre de victoire par Joueur avec variation de la profondeur du joueur 0' 
+set xlabel 'profondeur'; 
+set ylabel 'nombre Victoire'; 
+set output 'src/assets/result/graph.png'; 
+plot 'src/assets/test/victoire_2023-4-7_16-53.csv' u 2:xtic(1) title 'Joueur 0' linecolor 'red', 'src/assets/test/victoire_2023-4-7_16-53.csv' u 3:xtic(1) title 'Joueur 1' linecolor 'blue', 'src/assets/test/victoire_2023-4-7_16-53.csv' u 4:xtic(1) title 'Joueur 2' linecolor 'green', 'src/assets/test/victoire_2023-4-7_16-53.csv' u 5:xtic(1) title 'Joueur 3' linecolor 'black'; 
