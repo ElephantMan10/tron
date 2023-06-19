@@ -15,16 +15,16 @@ Vous avez également la possiblité d'implémenter des intelligences artificiell
 ## Installation
 
 1. Cloner ce repo.
-`` git clone https://github.com/ElephantMan10/tron``
+``git clone https://github.com/ElephantMan10/tron``
 
 2. Accéder au répertoire du projet
-`` cd tron ``
+``cd tron``
 
 3. Compiler le code source
-`` make ``
+``make``
 
 4. Exécuter le jeu
-`` ./tron ``
+``./tron``
 
 ## Déroulement
 
