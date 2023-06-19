@@ -45,19 +45,19 @@ Features
 
 ## Installation
 
-- Clone this repository
+1. Clone this repository
 
 ``git clone https://github.com/ElephantMan10/tron``
 
-- Navigate to the project directory.
+2. Navigate to the project directory.
 
 ``cd tron``
 
-- Compile the source code.
+3. Compile the source code.
 
 ``make``
 
-- Run the game.
+4. Run the game.
 
 ``./tron``
 
